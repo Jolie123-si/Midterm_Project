@@ -84,11 +84,11 @@ public class DataInitializer implements CommandLineRunner {
         
         // ==================== 2. CREATE USERS ====================
         System.out.println("Creating Users...");
-        User user1 = new User(null, "patrick_d", "patrick@example.com", null, kigali);
-        User user2 = new User(null, "uwase_marie", "uwase@example.com", null, gasabo);
-        User user3 = new User(null, "mugisha_jean", "mugisha@example.com", null, eastern);
-        User user4 = new User(null, "imena_alice", "imena@example.com", null, kimironko);
-        User user5 = new User(null, "niyonzima_eric", "niyonzima@example.com", null, kibagabaga);
+        User user1 = new User(null, "patrick_d", "patrick@example.com", null, kigali, null);
+        User user2 = new User(null, "uwase_marie", "uwase@example.com", null, gasabo, null);
+        User user3 = new User(null, "mugisha_jean", "mugisha@example.com", null, eastern, null);
+        User user4 = new User(null, "imena_alice", "imena@example.com", null, kimironko, null);
+        User user5 = new User(null, "niyonzima_eric", "niyonzima@example.com", null, kibagabaga, null);
         
         userRepository.saveAll(Arrays.asList(user1, user2, user3, user4, user5));
         
