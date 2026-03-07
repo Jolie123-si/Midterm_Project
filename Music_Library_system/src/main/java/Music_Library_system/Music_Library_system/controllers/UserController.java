@@ -68,23 +68,39 @@ public class UserController {
     }
     
     /**
-     * Get all users from a given location using location code OR location name
-     * REQUIREMENT #8 IMPLEMENTATION
+     * REQUIREMENT #8: Get all users from a given PROVINCE using province code OR province name
+     * 
+     * URL Examples:
+     * - /api/users/by-province?code=KIG
+     * - /api/users/by-province?name=Kigali
+     * - /api/users/by-province?code=KIG&name=Kigali
+     * 
+     * Query Logic:
+     * - Searches through location hierarchy to find users in specified province
+     * - Accepts either province code OR province name OR both
+     * - Returns all users whose location (at any level) belongs to that province
+     * 
+     * @param code Province code (e.g., "KIG" for Kigali)
+     * @param name Province name (e.g., "Kigali")
+     * @return List of users from the specified province
      */
-    @GetMapping("/by-location")
-    public ResponseEntity<List<User>> getUsersByLocation(
+    @GetMapping("/by-province")
+    public ResponseEntity<List<User>> getUsersByProvince(
             @RequestParam(required = false) String code,
             @RequestParam(required = false) String name) {
         
         if ((code == null || code.isEmpty()) && (name == null || name.isEmpty())) {
-            code = "";
-            name = "";
+            return ResponseEntity.badRequest().build();
         }
         
-        List<User> users = userService.getUsersByLocationCodeOrName(
-                code != null ? code : "",
-                name != null ? name : ""
-        );
+        List<User> users;
+        if (code != null && !code.isEmpty() && name != null && !name.isEmpty()) {
+            users = userService.getUsersByProvinceCodeOrName(code, name);
+        } else if (code != null && !code.isEmpty()) {
+            users = userService.getUsersByProvinceCode(code);
+        } else {
+            users = userService.getUsersByProvinceName(name);
+        }
         
         return ResponseEntity.ok(users);
     }

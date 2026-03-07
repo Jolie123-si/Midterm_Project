@@ -67,11 +67,38 @@ public class UserService {
     }
     
     /**
-     * Get all users from a given location using location code OR location name
-     * REQUIREMENT #8 IMPLEMENTATION
+     * REQUIREMENT #8: Get all users from a given PROVINCE using province code OR province name
+     * 
+     * Query Logic Explanation:
+     * 1. Users are linked to locations at any level (Province, District, Sector, Cell)
+     * 2. To find users by province, we traverse the location hierarchy upward
+     * 3. The query checks if the user's location OR any of its parents match the province
+     * 4. Uses OR condition to match either code OR name
+     * 
+     * Example:
+     * - User in "Kimisagara" (Sector) → Parent: Nyarugenge (District) → Parent: Kigali (Province)
+     * - Query finds this user when searching for province "Kigali" or code "KIG"
+     * 
+     * @param provinceCode Province code (e.g., "KIG")
+     * @param provinceName Province name (e.g., "Kigali")
+     * @return List of all users from that province
      */
-    public List<User> getUsersByLocationCodeOrName(String locationCode, String locationName) {
-        return userRepository.findByLocationCodeOrLocationName(locationCode, locationName);
+    public List<User> getUsersByProvinceCodeOrName(String provinceCode, String provinceName) {
+        return userRepository.findByProvinceCodeOrProvinceName(provinceCode, provinceName);
+    }
+    
+    /**
+     * Get users by province code only
+     */
+    public List<User> getUsersByProvinceCode(String provinceCode) {
+        return userRepository.findByProvinceCode(provinceCode);
+    }
+    
+    /**
+     * Get users by province name only
+     */
+    public List<User> getUsersByProvinceName(String provinceName) {
+        return userRepository.findByProvinceName(provinceName);
     }
     
     /**
