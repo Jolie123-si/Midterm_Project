@@ -9,14 +9,7 @@ import org.springframework.stereotype.Component;
 import java.time.Duration;
 import java.util.Arrays;
 
-/**
- * Data Initializer - Populates the database with sample data
- * 
- * Author: Patrick DUSHIMIMANA
- * University: Adventist University of Central Africa
- * Course: Web Technology and Internet
- * Date: February 20, 2026
- */
+
 @Component
 public class DataInitializer implements CommandLineRunner {
     

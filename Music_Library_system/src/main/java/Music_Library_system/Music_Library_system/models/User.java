@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 /**
  * User Entity - Represents a user of the music library
  * Relationship: Many-to-One with Location (Many Users belong to one Location)
+ * Relationship: One-to-One with UserProfile (One User has One UserProfile)
  */
 @Entity
 @Table(name = "users")
@@ -33,6 +34,13 @@ public class User {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "location_id", nullable = false)
     private Location location;
+    
+    /**
+     * One-to-One relationship with UserProfile
+     * This is the inverse side (does not contain the foreign key)
+     */
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private UserProfile userProfile;
     
     @PrePersist
     protected void onCreate() {
